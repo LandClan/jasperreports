@@ -168,25 +168,32 @@ public class MapElementImageProvider extends AbstractMapElementImageProvider
 			}
 		}
 
-		String imageLocation = 
-			"https://maps.googleapis.com/maps/api/staticmap?center=" 
-			+ latitude 
-			+ "," 
-			+ longitude 
-			+ "&size=" 
+		// LandClan: Updated - added logic to support implicit positioning
+		String imageLocation = "https://maps.googleapis.com/maps/api/staticmap?";
+
+		if (Math.abs(latitude) > 0.0001 && Math.abs(longitude) > 0.0001) {
+			// Use normal positioning:
+			imageLocation += "center="
+					+ latitude
+					+ ","
+					+ longitude
+					+ "&zoom="
+					+ zoom
+					+ "&";
+		}
+
+		imageLocation += "size="
 			+ element.getWidth() 
 			+ "x" 
-			+ element.getHeight() 
-			+ "&zoom="
-			+ zoom
+			+ element.getHeight()
 			+ (mapType == null ? "" : "&maptype=" + mapType)
 			+ (mapFormat == null ? "" : "&format=" + mapFormat)
 			+ (mapScale == null ? "" : "&scale=" + mapScale);
 		String params = (reqParams == null || reqParams.trim().length() == 0 ? "" : "&" + reqParams);
 
-		//a static map url is limited to 2048 characters
-		imageLocation += imageLocation.length() + markers.length() + currentPaths.length() + params.length() < MAX_URL_LENGTH
-				? markers + currentPaths + params
+		//a static map url is limited to 8192 characters
+		imageLocation += imageLocation.length() + markers.length() + currentPaths.length() + params.length() < MAX_URL_LENGTH 
+				? markers + currentPaths + params 
 				: imageLocation.length() + markers.length() + params.length() < MAX_URL_LENGTH ? markers + params : params;
 
 		if (log.isTraceEnabled()) {
