@@ -178,10 +178,6 @@ public class MapCompiler implements ComponentCompiler
 			}
 		}
 		
-		if((map.getLatitudeExpression() == null || map.getLongitudeExpression() == null) && map.getAddressExpression() == null){
-			verifier.addBrokenRule("Missing the latitude and/or the longitude expression for the map center. Try to configure them properly, or configure the equivalent addressExpression for this map.", map);
-		}
-		
 		String[] reqNames = new String[]{MapComponent.ITEM_PROPERTY_latitude, MapComponent.ITEM_PROPERTY_longitude};
 		List<MarkerItemData> markerItemDataList = map.getMarkerItemDataList();
 		if (markerItemDataList != null && markerItemDataList.size() > 0)
