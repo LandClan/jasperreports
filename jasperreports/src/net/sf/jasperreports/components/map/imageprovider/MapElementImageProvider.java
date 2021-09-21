@@ -49,6 +49,37 @@ public class MapElementImageProvider extends AbstractMapElementImageProvider
 	 */
 	public static Integer MAX_URL_LENGTH = 8192;
 
+	/**
+	 * Local utility to facilitate de-duplication of repeated marker configurations in URL
+	 */
+	private static class MarkerProperties {
+		private String size;
+		private String color;
+		private String label;
+		private String icon;
+
+		public MarkerProperties(String size, String color, String label, String icon) {
+			this.size = size;
+			this.color = color;
+			this.label = label;
+			this.icon = icon;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			MarkerProperties that = (MarkerProperties) o;
+			return Objects.equals(size, that.size) && Objects.equals(color, that.color) &&
+					Objects.equals(label, that.label) && Objects.equals(icon, that.icon);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(size, color, label, icon);
+		}
+	}
+
 	@Override
 	protected Renderable createRenderable(JasperReportsContext jasperReportsContext, JRGenericPrintElement element) throws JRException
 	{
@@ -70,20 +101,20 @@ public class MapElementImageProvider extends AbstractMapElementImageProvider
 		return cachedRenderable;
 	}
 	protected String getImageLocation(JRGenericPrintElement element) {
-		Float latitude = (Float)element.getParameterValue(MapComponent.ITEM_PROPERTY_latitude);
+		Float latitude = (Float) element.getParameterValue(MapComponent.ITEM_PROPERTY_latitude);
 		latitude = latitude == null ? MapComponent.DEFAULT_LATITUDE : latitude;
 
-		Float longitude = (Float)element.getParameterValue(MapComponent.ITEM_PROPERTY_longitude);
+		Float longitude = (Float) element.getParameterValue(MapComponent.ITEM_PROPERTY_longitude);
 		longitude = longitude == null ? MapComponent.DEFAULT_LONGITUDE : longitude;
 
-		Integer zoom = (Integer)element.getParameterValue(MapComponent.PARAMETER_ZOOM);
+		Integer zoom = (Integer) element.getParameterValue(MapComponent.PARAMETER_ZOOM);
 		zoom = zoom == null ? MapComponent.DEFAULT_ZOOM : zoom;
 
 		String mapType = (String)element.getParameterValue(MapComponent.ATTRIBUTE_MAP_TYPE);
 		String mapScale = (String)element.getParameterValue(MapComponent.ATTRIBUTE_MAP_SCALE);
 		String mapFormat = (String)element.getParameterValue(MapComponent.ATTRIBUTE_IMAGE_TYPE);
 		String reqParams = (String)element.getParameterValue(MapComponent.PARAMETER_REQ_PARAMS);
-		String markers ="";
+		String markers = "";
 
 		List<Map<String,Object>> markerList = prepareMarkerList(element);
 		if(!markerList.isEmpty())
@@ -100,8 +131,8 @@ public class MapElementImageProvider extends AbstractMapElementImageProvider
 					currentMarkers += color != null && color.length() > 0 ? "color:0x" + color + "%7C" : "";
 					String label = (String)map.get(MapComponent.ITEM_PROPERTY_MARKER_label);
 					currentMarkers += label != null && label.length() > 0 ? "label:" + Character.toUpperCase(label.charAt(0)) + "%7C" : "";
-					String icon = map.get(MapComponent.ITEM_PROPERTY_MARKER_ICON_url) != null 
-							? (String)map.get(MapComponent.ITEM_PROPERTY_MARKER_ICON_url) 
+					String icon = map.get(MapComponent.ITEM_PROPERTY_MARKER_ICON_url) != null
+							? (String)map.get(MapComponent.ITEM_PROPERTY_MARKER_ICON_url)
 							: (String)map.get(MapComponent.ITEM_PROPERTY_MARKER_icon);
 					if(icon != null && icon.length() > 0)
 					{
@@ -183,8 +214,8 @@ public class MapElementImageProvider extends AbstractMapElementImageProvider
 		}
 
 		imageLocation += "size="
-			+ element.getWidth() 
-			+ "x" 
+			+ element.getWidth()
+			+ "x"
 			+ element.getHeight()
 			+ (mapType == null ? "" : "&maptype=" + mapType)
 			+ (mapFormat == null ? "" : "&format=" + mapFormat)
@@ -203,6 +234,8 @@ public class MapElementImageProvider extends AbstractMapElementImageProvider
 		return imageLocation;
 	}
 
+	// TODO: LandClan rebase: Check that this new root function is compatible with our
+	//  marker processing algorithm
 	List<Map<String, Object>> prepareMarkerList(JRGenericPrintElement element)
 	{
 		Map<String, Object> markerSeries = (Map<String, Object>)element.getParameterValue(MapComponent.PARAMETER_MARKERS);
