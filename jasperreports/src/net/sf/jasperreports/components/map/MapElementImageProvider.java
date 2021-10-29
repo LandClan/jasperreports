@@ -59,7 +59,7 @@ public class MapElementImageProvider {
     /**
      * The character count limit for a static map URL request
      */
-    public static Integer MAX_URL_LENGTH = 8192;
+    public static final int  MAX_URL_LENGTH = 8192;
 
     /**
      * Zoom-style constants. This is a work around for the jasperreports schema not supporting map style
@@ -203,7 +203,7 @@ public class MapElementImageProvider {
                     (List<Map<String, Object>>) element.getParameterValue(MapComponent.PARAMETER_PATHS),
                     element.getWidth(), element.getHeight());
 
-            String imageLocation = buildMapImageUrl(args);
+            String imageLocation = buildMapImageUrl(args, true);
             landclanLog("Requesting renderable from URL: " + imageLocation);
             cacheRenderer = RendererUtil.getInstance(jasperReportsContext).getNonLazyRenderable(imageLocation, onErrorType);
             if (cacheRenderer != null) {
@@ -236,7 +236,7 @@ public class MapElementImageProvider {
     }
 
     @SuppressWarnings("unchecked")
-    public static String buildMapImageUrl(MapImageUrlArgs args) {
+    public static String buildMapImageUrl(MapImageUrlArgs args, boolean keepWithinMaxUrlLength) {
         Float latitude = args.getLatitude();
         latitude = latitude == null ? MapComponent.DEFAULT_LATITUDE : latitude;
 
@@ -389,6 +389,11 @@ public class MapElementImageProvider {
                 + styles;
         String params = (reqParams == null || reqParams.trim().length() == 0 ? "" : "&" + reqParams);
 
+        if (!keepWithinMaxUrlLength) {
+            // To check if all the data can be supported by the URL. Can use this response to
+            // re-structure data and potentially split the data across multiple maps.
+            return markers + currentPaths.toString() + params;
+        }
         //a static map url is limited to 8192 characters
         imageLocation += imageLocation.length() + markers.length() + currentPaths.length() + params.length() < MAX_URL_LENGTH
                 ? markers + currentPaths.toString() + params
