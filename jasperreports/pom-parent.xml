@@ -88,8 +88,8 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<root-revision>6.21.0</root-revision>
-		<revision>6.21.0-landclan</revision>
+		<root-revision>6.21.2</root-revision>
+		<revision>6.21.2-landclan</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skipInstall>true</skipInstall>
 		<skipDeploy>true</skipDeploy>

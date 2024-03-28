@@ -3,8 +3,8 @@
 	<description>Helps build the JasperReports distribution files.</description>
 
 	<property name="organization" value="LandClan Ltd."/>
-	<property name="version" value="6.21.0-landclan"/>
-	<property name="scm-tag" value="6.21.0-landclan"/>
+	<property name="version" value="6.21.2-landclan"/>
+	<property name="scm-tag" value="6.21.2-landclan"/>
 
 	<path id="project-classpath">
 		<path refid="project-lib"/>
