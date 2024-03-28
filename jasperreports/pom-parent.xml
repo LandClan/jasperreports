@@ -70,6 +70,17 @@
 			</roles>
 			<timezone>+2</timezone>
 		</developer>
+		<developer>
+			<id>chris-landclan</id>
+			<name>Chris James</name>
+			<email>chris@landclan.com</email>
+			<organization>LandClan Ltd.</organization>
+			<organizationUrl>https://landclan.com</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/London</timezone>
+		</developer>
 	</developers>
 	<scm>
 		<connection>${scmConnection}</connection>
@@ -77,15 +88,16 @@
 		<url>${scmUrl}</url>
 	</scm>
 	<properties>
-		<revision>master-SNAPSHOT</revision>
+		<root-revision>6.21.0</root-revision>
+		<revision>6.21.0-landclan</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skipInstall>true</skipInstall>
 		<skipDeploy>true</skipDeploy>
-		<scmConnection>scm:git:https://github.com/TIBCOSoftware/jasperreports.git</scmConnection>
-		<scmUrl>https://github.com/TIBCOSoftware/jasperreports</scmUrl>
-		<maven.buildNumber.doCheck>true</maven.buildNumber.doCheck>
-		<owasp.suppression.file>${basedir}/owasp-suppressions.xml</owasp.suppression.file>
-	</properties>
+		<scmConnection>scm:git:https://github.com/LandClan/jasperreports.git</scmConnection>
+		<scmUrl>https://github.com/LandClan/jasperreports</scmUrl>
+        <maven.buildNumber.doCheck>true</maven.buildNumber.doCheck>
+        <owasp.suppression.file>${basedir}/owasp-suppressions.xml</owasp.suppression.file>
+    </properties>
 	<repositories>
 		<repository>
 			<id>jaspersoft-third-party</id>
