@@ -298,7 +298,7 @@
 		</xslt>
 		<ant dir="./demo/samples/functions" target="clean"/>
 	</target>
-	
+
 	<target name="docs"
             depends="preparedocs, javadoc, schemaref, partschemaref, componentschemaref, configref, sampleref, functionref"
             description="Generates all documentation."/>
