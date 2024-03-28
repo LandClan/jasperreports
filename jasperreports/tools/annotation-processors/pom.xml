@@ -15,6 +15,8 @@
 	<url>http://jasperreports.sourceforge.net</url>
 	<scm>
 		<connection>${scmConnection}</connection>
+		<!-- LandClan note: We are currently using root-revision. If we need to edit the
+		 annotation processors module code, we would need to install our own version in Nexus. -->
 		<tag>${revision}</tag>
 		<url>${scmUrl}</url>
 	</scm>
@@ -27,7 +29,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-metadata</artifactId>
-			<version>${revision}</version>
+			<version>${root-revision}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -37,8 +39,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 					<compilerArgs>
 						<arg>-proc:none</arg>
 						<arg>-Xlint:deprecation,-unchecked,-options</arg>

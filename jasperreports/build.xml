@@ -17,7 +17,7 @@
 		<ivy:cachepath pathid="project-lib" log="download-only" conf="compile"/>
 		<ivy:cachepath pathid="annotations-lib" log="download-only" conf="annotations"/>
 		<pathconvert property="annotations-paths" refid="annotations-lib"/>
-		<javac destdir="./build/classes" debug="true" optimize="false" target="1.8" source="1.8"
+		<javac destdir="./build/classes" debug="true" optimize="false" target="11" source="11"
 			   encoding="UTF-8" includeantruntime="false" excludes="**/package-info.java">
 			<classpath refid="project-classpath"/>
 			<src path="./src"/>
@@ -315,7 +315,7 @@
 		</path>
 
 		<mkdir dir="./build/test-classes"/>
-		<javac destdir="./build/test-classes" debug="true" optimize="false" target="1.8" source="1.8"
+		<javac destdir="./build/test-classes" debug="true" optimize="false" target="11" source="11"
 			   encoding="UTF-8" includeantruntime="false">
 			<classpath refid="test-compile"/>
 			<src path="./tests"/>

@@ -95,7 +95,8 @@
 		<skipDeploy>true</skipDeploy>
 		<scmConnection>scm:git:https://github.com/LandClan/jasperreports.git</scmConnection>
 		<scmUrl>https://github.com/LandClan/jasperreports</scmUrl>
-        <maven.buildNumber.doCheck>true</maven.buildNumber.doCheck>
+		<!-- LandClan edit: Turn off the maven build number check -->
+        <maven.buildNumber.doCheck>false</maven.buildNumber.doCheck>
         <owasp.suppression.file>${basedir}/owasp-suppressions.xml</owasp.suppression.file>
     </properties>
 	<repositories>
@@ -142,6 +143,8 @@
 				</executions>
 			</plugin>
 			<plugin>
+
+				<!-- TODO: REMOVE THIS -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
 				<version>1.4</version>
@@ -173,26 +176,6 @@
 				<configuration>
 					<skip>${skipInstall}</skip>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>enforce-java-version</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<requireJavaVersion>
-									<version>[1.8,9)</version>
-								</requireJavaVersion>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.owasp</groupId>

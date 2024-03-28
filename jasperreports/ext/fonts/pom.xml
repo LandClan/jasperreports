@@ -15,6 +15,8 @@
 	<url>http://jasperreports.sourceforge.net</url>
 	<scm>
 		<connection>${scmConnection}</connection>
+		<!-- LandClan note: We are currently using root-revision. If we need to edit the
+		 fonts module code, we would need to install our own version in Nexus. -->
 		<tag>${revision}</tag>
 		<url>${scmUrl}</url>
 	</scm>
