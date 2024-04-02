@@ -1,7 +1,5 @@
 The jar file must be uploaded to the nexus. This can be done from the nexus web UI.
 
-In future we should create a Jenkins pipeline to automate this process.
-
 # Jaspersoft Studio
 
 If you want to run Jaspersoft Studio version 6.21.2 using the LandClan custom version then you will need to follow these instructions.
