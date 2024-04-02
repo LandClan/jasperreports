@@ -85,6 +85,7 @@ public class MapFillComponent extends BaseFillComponent implements FillContextPr
 	public static final String EXCEPTION_MESSAGE_KEY_INVALID_ORIENTATION_VALUE = "components.map.custom.control.orientation.invalid.value";
 	public static final String EXCEPTION_MESSAGE_KEY_INVALID_LEGEND_PROPERTY_VALUE = "components.map.legend.invalid.value";
 	public static final String EXCEPTION_MESSAGE_KEY_INVALID_LEGEND_SIZE_PROPERTY_VALUE = "components.map.legend.invalid.size.value";
+	public static final String MARKER_SERIES_NAME_PREFIX = "marker_series_";
 
 	private final MapComponent mapComponent;
 	
@@ -278,7 +279,7 @@ public class MapFillComponent extends BaseFillComponent implements FillContextPr
 					if (seriesName != null) {
 						markerSeries.put(seriesName.toString(), markerSingleSeriesConfiguration);
 					} else {
-						markerSeries.put("marker_series_" + i, markerSingleSeriesConfiguration);
+						markerSeries.put(MARKER_SERIES_NAME_PREFIX + i, markerSingleSeriesConfiguration);
 					}
 				}
 				i++;
