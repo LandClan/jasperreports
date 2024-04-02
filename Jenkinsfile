@@ -20,8 +20,10 @@ pipeline {
       }
       steps {
         configFileProvider([configFile(fileId: 'nexus-maven-settings-xml', variable: 'MAVEN_SETTINGS')]) {
-          bat 'mvn clean install -B -e -s %MAVEN_SETTINGS%'
-          bat 'ant clean jar'
+          dir('jasperreports') {
+            bat 'mvn clean install -B -e -s %MAVEN_SETTINGS%'
+            bat 'ant clean jar'
+          }
         }
       }
     }
