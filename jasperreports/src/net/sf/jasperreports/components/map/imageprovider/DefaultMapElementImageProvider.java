@@ -52,10 +52,14 @@ public class DefaultMapElementImageProvider implements MapImageProvider {
     public JRPrintImage getImage(
             JasperReportsContext jasperReportsContext,
             JRGenericPrintElement element) throws JRException {
-
+        /* LandClan edit:
+         * To ensure Jaspersoft Studio and app behave the same, and to avoid having
+         * to customize the ChromeMapElementImageProvider and its framework, always
+         * use the standard MapElementImageProvider.
         if (chromeMapElementImageProvider.isEnabled(jasperReportsContext)) {
             return chromeMapElementImageProvider.getImage(jasperReportsContext, element);
         }
+        */
 
         return mapElementImageProvider.getImage(jasperReportsContext, element);
     }
