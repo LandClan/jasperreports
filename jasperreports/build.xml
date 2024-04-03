@@ -101,8 +101,6 @@
 				<include name="**/license.txt"/>
 			</fileset>
 		</jar>
-		<mkdir dir="./landclan/lib"/>
-		<copy file="./dist/jasperreports-landclan.jar" todir="./landclan/lib" />
 	</target>
 
 	<target name="alljars" depends="jar, javaflow" description="Builds all JasperReports JAR files."/>
