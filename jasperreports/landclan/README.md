@@ -1,8 +1,8 @@
-The jar file must be uploaded to the nexus. This can be done from the nexus web UI.
-
 # Jaspersoft Studio
 
 If you want to run Jaspersoft Studio version 6.21.2 using the LandClan custom version then you will need to follow these instructions.
+
+Manual build steps: (preferably use an "official" Jenkins release build)
 
 1. Build jasperreports landclan version:
    * `mvn clean install`
@@ -14,4 +14,4 @@ If you want to run Jaspersoft Studio version 6.21.2 using the LandClan custom ve
 6. Open the path in your file browser.
 7. Close Jaspersoft Studio to free-up the jar file for editing.
 8. Back-up the default version of this file by renaming it to `jasperreports-6.21.2.jar.official`.
-9. Copy `dist/jasperreports-6.21.2-landclan.jar` into the directory and rename it `jasperreports-6.21.2.jar`.
+9. Copy `dist/jasperreports-landclan.jar` into the directory and rename it `jasperreports-6.21.2.jar`.
