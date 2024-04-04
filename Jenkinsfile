@@ -28,7 +28,7 @@ pipeline {
       steps {
         configFileProvider([configFile(fileId: 'nexus-maven-settings-xml', variable: 'MAVEN_SETTINGS')]) {
           dir('jasperreports') {
-            bat 'mvn clean install -B -e -s %MAVEN_SETTINGS% -DskipTests'
+            bat 'mvn clean deploy -B -e -s %MAVEN_SETTINGS% -DskipTests'
             bat 'ant clean jar'
           }
         }
@@ -43,9 +43,9 @@ pipeline {
         configFileProvider([configFile(fileId: 'nexus-maven-settings-xml', variable: 'MAVEN_SETTINGS')]) {
           withCredentials([usernamePassword(credentialsId: 'github-landclan', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
             dir('jasperreports') {
-              bat 'mvn clean install -B -e -s %MAVEN_SETTINGS% -DskipTests'
+              bat 'mvn clean deploy -B -e -s %MAVEN_SETTINGS% -DskipTests'
               bat 'ant clean jar'
-              bat 'mvn install:install-file -Dfile="dist/jasperreports-landclan.jar" -DgroupId="net.sf.jasperreports" -DartifactId="jasperreports-landclan-intermediate" -Dversion="1.0.0" -Dpackaging=jar -DgeneratePom=true'
+              bat 'mvn deploy:deploy-file -Durl=https://dev.landclan.com/nexus -Dfile="dist/jasperreports-landclan.jar" -DgroupId="net.sf.jasperreports" -DartifactId="jasperreports-landclan-intermediate" -Dversion="1.0.0" -Dpackaging=jar -DgeneratePom=true'
             }
             dir('jasperreports/landclan') {
               bat 'mvn release:prepare -X -B -e -s %MAVEN_SETTINGS%'
