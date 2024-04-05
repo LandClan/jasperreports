@@ -11,18 +11,11 @@ pipeline {
             defaultValue: false)
   }
   stages {
-    stage("Build SNAPSHOT") {
+    stage("Build Ant JAR") {
       when {
         not {
-          anyOf {
-            // Don't build the master branch since it represents the upstream that we forked.
-            branch 'master'
-            expression {
-              // Special Ant-Maven release stage is reserved, see below.
-              branch 'landclan/master'
-              expression { params.RELEASE }
-            }
-          }
+          // Don't build the master branch since it represents the upstream that we forked.
+          branch 'master'
         }
       }
       steps {
@@ -34,7 +27,7 @@ pipeline {
         }
       }
     }
-    stage("Build & Deploy Release") {
+    stage("Release") {
       when {
         branch 'landclan/master'
         expression { params.RELEASE }
@@ -43,8 +36,8 @@ pipeline {
         configFileProvider([configFile(fileId: 'nexus-maven-settings-xml', variable: 'MAVEN_SETTINGS')]) {
           withCredentials([usernamePassword(credentialsId: 'github-landclan', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
             dir('jasperreports') {
-              bat 'mvn clean install -B -e -s %MAVEN_SETTINGS% -DskipTests'
-              bat 'ant clean jar'
+              // Locally install the Ant artifact to have it available in mvn release (which re-clones the repo, wiping
+              // out artifacts).
               bat 'mvn install:install-file -Dfile="dist/jasperreports-landclan.jar" -DgroupId="net.sf.jasperreports" -DartifactId="jasperreports-landclan-intermediate" -Dversion="1.0.0" -Dpackaging=jar -DgeneratePom=true'
             }
             dir('jasperreports/landclan') {
